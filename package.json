@@ -23,7 +23,7 @@
     "optimize": "gzip -kr build/static",
     "full-build": "NODE_ENV=production npm run build; npm run optimize",
     "deploy": "sudo -u www-data ./deploy.sh",
-    "full-deploy": "npm run full-build && sudo -u www-data ./deploy.sh",
+    "full-deploy": "npm run full-build && sudo -u www-data ./deploy.sh"
   },
   "eslintConfig": {
     "extends": [
