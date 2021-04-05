@@ -54,6 +54,10 @@ $scroller: rgba(#9db5f2, 0.2);
   width: 272px;
   padding: 12px;
   margin: 8px;
+
+  @media (max-width: 1000px) {
+    width: 200px;
+  }
 }
 
 .list {
