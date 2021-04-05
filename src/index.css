@@ -1,13 +1,48 @@
+@font-face {
+  src: url(./fonts/hun2.ttf);
+  font-family: HUN;
+}
+
+@font-face {
+  src: url(./fonts/pfw.ttf);
+  font-family: PFW;
+}
+
+@font-face {
+  font-family: C;
+  font-weight: 500;
+  src: url(./fonts/cr.ttf);
+}
+
+@font-face {
+  font-family: C;
+  font-weight: 900;
+  src: url(./fonts/cb.ttf);
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: HUN, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  background: #16191C;
+  color: #fedefe;
+  font-size: 16pt;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+hr {
+  margin: 1em;
+  opacity: 0.3;
 }
