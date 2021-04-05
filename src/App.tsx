@@ -134,7 +134,7 @@ function ComboCalculator() {
           />
 
           {list.length === 0 && <div className="box px-3 t-center m-auto" style={{ width: 300 }}>
-            <div className="mt-5 pt-3">
+            <div className="my-5 pt-3">
               Add some items to see their attack power!
             </div>
           </div>}
