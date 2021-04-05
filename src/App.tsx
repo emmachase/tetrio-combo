@@ -11,8 +11,10 @@ const AttackBtn: FC<{
   className?: string
   label: string
 }> = (props) => {
+  const dontDeleteMe = useRef();
+
   return (
-    <div onTouchStart={() => 0} onClick={props.onClick} className={"atk bevel-default " + props.className ?? ""}>
+    <div onTouchStart={() => dontDeleteMe.current = undefined} onClick={props.onClick} className={"atk bevel-default " + props.className ?? ""}>
       {props.label}
     </div>
   );
