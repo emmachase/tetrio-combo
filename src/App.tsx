@@ -12,7 +12,7 @@ const AttackBtn: FC<{
   label: string
 }> = (props) => {
   return (
-    <div onClick={props.onClick} className={"atk bevel-default " + props.className ?? ""}>
+    <div onTouchStart={() => 0} onClick={props.onClick} className={"atk bevel-default " + props.className ?? ""}>
       {props.label}
     </div>
   );

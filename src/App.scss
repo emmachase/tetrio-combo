@@ -136,13 +136,14 @@ $box-height: 40px;
     text-transform: uppercase;
     letter-spacing: 2px;
     box-sizing: border-box;
+    user-select: none;
 
     .details {
       opacity: 1;
       transition: opacity 0.1s ease-in-out;
     }
 
-    &:active .details {
+    &:active .details:not(:active) {
       opacity: 0;
     }
 
