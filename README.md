@@ -1,4 +1,4 @@
-# Tetrio Combo Calculator
+# TETR.IO Combo Calculator
 
-It calculates tetrio combos.
+It calculates [tetr.io](https://tetr.io/) combos.
 It's hosted [here](https://combo.its-em.ma).

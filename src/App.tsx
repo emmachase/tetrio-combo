@@ -109,7 +109,7 @@ function ComboCalculator() {
   return (
     <TwoPane>
         <div>
-          <h1 className="t-center">Combo Calculator</h1>
+          <h1 className="t-center">COMBO CALCULATOR</h1>
           <AttackList onAttack={(typ, lines, spin) => {
             setList(ordering.current = ordering.current.concat([{typ, lines, spin}]));
             recompute();
@@ -137,12 +137,12 @@ function ComboCalculator() {
 
           {list.length === 0 && <div className="box px-3 t-center m-auto" style={{ width: 300 }}>
             <div className="my-5 pt-3">
-              Add some items to see their attack power!
+              add some items to see their attack power!
             </div>
           </div>}
 
           {list.length > 0 && <div className="t-center mt-5">
-            For a total of
+            for a total of
             <div className="result">
               <strong className={getColor(results.get("final") ?? 0)}>{results.get("final") ?? 0}</strong> lines
             </div>
