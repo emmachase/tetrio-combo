@@ -24,15 +24,19 @@ const fn = (order: number[], force: boolean, down?: boolean, originalIndex?: num
         { y: (curIndex ?? order.indexOf(index)) * BOX_HEIGHT + (y ?? 0), scale: down ? 1.1 : 1, zIndex: down ? '1' : '0', shadow: down ? 15 : 1, immediate: (n: string) => n === 'y' || n === 'zIndex' }
         : { y: order.indexOf(index) * BOX_HEIGHT, scale: 1, zIndex: '0', shadow: 1, immediate: false }
 
+function isFuckingStupid(item: any) {
+    return item.lines === 0 || (item.spin != null && item.lines !== 4 && item.lines !== 2)
+}
+
 export const DraggableList: FC<{
     items: any[]
     depends?: any
-    onReorder(items: any[]): void
+    onSuperficialChange(items: any[]): void
     onChange(items: any[]): void
     getLabel(item: any): React.ReactElement
     getInfo(item: any, index: number): React.ReactElement
     getClasses(item: any): string
-}> = ({ items, onReorder, onChange, getLabel, getInfo, getClasses }) => {
+}> = ({ items, onSuperficialChange, onChange, getLabel, getInfo, getClasses }) => {
     const order = useRef<number[]>([])
 
     const [springs, setSprings] = useSprings(items.length, fn(order.current, true));
@@ -48,7 +52,7 @@ export const DraggableList: FC<{
         setSprings.start(fn(newOrder, false, active, originalIndex, curIndex, y));
         if (!active) {
             order.current = newOrder;
-            onReorder(order.current.map(x => items[x]));
+            onSuperficialChange(order.current.map(x => items[x]));
         }
     })
 
@@ -60,7 +64,16 @@ export const DraggableList: FC<{
         onChange(prev);
     }
 
-    const bindDelete = useDrag(({ event }) => {
+
+    const onTogglePC = (index: number) => {
+        const fromIndex = order.current.indexOf(index);
+        const prev = order.current.map(x => items[x]);
+        prev[fromIndex].pc = !prev[fromIndex].pc;
+
+        onSuperficialChange(prev);
+    }
+
+    const bindButton = useDrag(({ event }) => {
         event.stopPropagation();
     })
 
@@ -70,7 +83,7 @@ export const DraggableList: FC<{
                 {springs.map(({ zIndex, shadow, y, scale }, i) => (
                     <animated.div
                         className="child"
-                        key={i}
+                        key={items[i].key}
                         style={{
                             zIndex: zIndex as any,
                             boxShadow: shadow.to(s => `rgba(0, 0, 0, 0.15) 0px ${s}px ${2 * s}px 0px`),
@@ -80,8 +93,15 @@ export const DraggableList: FC<{
                         <div className={clazz("bevel-default", "px-2", getClasses(items[i]))} {...bind(i)}>
                             {getLabel(items[i])}
 
-                            <div className="delete" {...bindDelete(i)} onClick={() => onDelete(i)}>
+                            <div className="delete" {...bindButton(i)} onClick={() => onDelete(i)}>
                                 <strong>x</strong>
+                            </div>
+
+                            <div className={clazz("delete", "d-flex", "items-center", "mr-3", items[i].pc && ["active", "c-2"])} {...bindButton(i)} onClick={() => onTogglePC(i)}>
+                                { items[i].pc && isFuckingStupid(items[i]) &&
+                                    <img className="mr-1" src="/boom.jpg" style={{height: "26px"}} alt="Impossible" title="It is impossible to perform a PC using this action under normal rules." />
+                                }
+                                <strong>PC</strong>
                             </div>
                         </div>
                         <div className="details">

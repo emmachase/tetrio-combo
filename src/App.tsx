@@ -1,7 +1,7 @@
 import { FC, useRef, useState } from 'react';
 import { TwoPane } from "./org/layout";
 import './App.scss';
-import { ClearTypes, Labels } from './consts';
+import { ClearTypes, GarbageValues, Labels } from './consts';
 import { clazz } from './util';
 import { processPlacement } from './scoring';
 import { DraggableList } from "./org/drag"
@@ -60,6 +60,8 @@ const Button: FC<{
   )
 }
 
+let keyCounter = 0;
+
 function ComboCalculator() {
   // const [state, setState] = useState(() => ({
   //   totalScore: 0,
@@ -97,8 +99,8 @@ function ComboCalculator() {
 
     const result = new Map();
     for (const item of ordering.current) {
-      const [score, garbage] = processPlacement(state, item.lines, item.spin);
-      result.set(item, {score, garbage, b2b: state.b2b, b2bLevel: state.currentbtbchainpower});
+      const [score, garbage] = processPlacement(state, item.lines, item.spin, item.pc);
+      result.set(item, {score, garbage, pc: item.pc, b2b: state.b2b, b2bLevel: state.currentbtbchainpower});
     }
 
     result.set("final", state.totalGarbageSent);
@@ -111,7 +113,7 @@ function ComboCalculator() {
         <div>
           <h1 className="t-center">COMBO CALCULATOR</h1>
           <AttackList onAttack={(typ, lines, spin) => {
-            setList(ordering.current = ordering.current.concat([{typ, lines, spin}]));
+            setList(ordering.current = ordering.current.concat([{typ, lines, spin, key: keyCounter++}]));
             recompute();
           }}/>
         </div>
@@ -120,14 +122,15 @@ function ComboCalculator() {
           <DraggableList
             items={list}
             depends={results}
-            onReorder={o => { ordering.current = o; recompute() }}
+            onSuperficialChange={o => { ordering.current = o; recompute() }}
             onChange={o => { setList(ordering.current = o); recompute() }}
             getClasses={x => getTypeColor(x.lines, x.spin)}
             getLabel={x => (Labels as any)[x.typ]}
             getInfo={x => {
               const obj = results.get(x);
               return <>
-                {obj.garbage > 0 && <span>Sends <strong className={getColor(obj.garbage)}>{obj.garbage}</strong> {obj.garbage === 1 ? "line" : "lines"}</span>}
+                {obj.garbage > 0 && <span>sends <strong className={getColor(obj.garbage)}
+                >{(obj.pc && obj.garbage > GarbageValues.ALL_CLEAR) ? `${obj.garbage - GarbageValues.ALL_CLEAR}+${GarbageValues.ALL_CLEAR}` : obj.garbage}</strong> {obj.garbage === 1 ? "line" : "lines"}</span>}
                 {obj.b2b > 1 && <span style={{ float: "right" }}>
                   <strong>{obj.b2b - 1}x</strong>B2B (L{obj.b2bLevel})
                 </span>}
@@ -150,7 +153,7 @@ function ComboCalculator() {
               <Button onClick={() => {
                 setList(ordering.current = []);
                 recompute();
-              }}>Reset</Button>
+              }}>reset</Button>
             </div>
           </div>}
         </div>
@@ -158,10 +161,17 @@ function ComboCalculator() {
   );
 }
 
+function GithubCorner(props: { href: string }) {
+  return <a className="p-fixed p-2 l-0 b-0 fst-italic bt-2 br-2 bra-0-8" href={props.href}>
+    github
+  </a>
+}
+
 function App() {
   return (
     <div className="app">
       <ComboCalculator />
+      <GithubCorner href="https://github.com/emmachase/tetrio-combo" />
     </div>
   );
 }

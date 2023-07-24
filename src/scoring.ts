@@ -14,7 +14,7 @@ export interface AttackState {
     }
 }
 
-export function processPlacement(state: AttackState, linesCleared: number, spinType: "mini" | "normal" | null): [number, number] {
+export function processPlacement(state: AttackState, linesCleared: number, spinType: "mini" | "normal" | null, pc: boolean | null): [number, number] {
     let maintainsB2B = false;
     if (linesCleared) { 
         state.combo++;
@@ -133,7 +133,10 @@ export function processPlacement(state: AttackState, linesCleared: number, spinT
         state.currentcombopower = Math.max(state.currentcombopower, finalGarbage);
     }
     
-    state.totalScore += score;
-    state.totalGarbageSent += finalGarbage;
-    return [score, finalGarbage];
+    const combinedScore = score + (pc ? ScoringValues.ALL_CLEAR : 0);
+    const combinedGarbage = finalGarbage + (pc ? GarbageValues.ALL_CLEAR : 0);
+
+    state.totalScore += combinedScore;
+    state.totalGarbageSent += combinedGarbage;
+    return [score, combinedGarbage];
 }

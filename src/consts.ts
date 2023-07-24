@@ -36,7 +36,12 @@ export const GarbageValues = {
     COMBO_MINIFIER: 1,
     COMBO_MINIFIER_LOG: 1.25,
     COMBO_BONUS: .25,
-    ALL_CLEAR: 10
+    ALL_CLEAR: 10,
+    combotable: {
+        none: [0],
+        "classic guideline": [0, 1, 1, 2, 2, 3, 3, 4, 4, 4, 5],
+        "modern guideline": [0, 1, 1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 4]
+    }
 }
 
 export const ClearTypes: [keyof typeof Labels, number, "normal" | "mini" | null][] = [

@@ -90,10 +90,11 @@ $scroller: rgba(#9db5f2, 0.2);
   text-shadow: none;
   
   color: rgba(255, 255, 255, 0.3);
-  transition: color 0.1s ease;
+  transition: color 0.1s ease, text-shadow 0.1s ease;
   
+  cursor: pointer;
+
   :hover {
-    cursor: pointer;
     color: rgba(255, 255, 255, 1);
   }
 }
@@ -198,6 +199,14 @@ $box-height: 40px;
 
 .px-3 { padding: 0 1em; }
 
+.p-2 { padding: 0.5em; }
+
+.bt-2 { border-top: 2px solid; }
+.br-2 { border-right: 2px solid; }
+
+.bra-0-8 { border-radius: 0 8px; }
+
+.mr-1 { margin-right: 0.25em; }
 .mr-3 { margin-right: 1em; }
 .mt-2 { margin-top: 0.5em; }
 .mt-3 { margin-top: 1em; }
@@ -213,6 +222,10 @@ $box-height: 40px;
   margin: auto;
 }
 
+.l-0 { left: 0; }
+
+.b-0 { bottom: 0; }
+
 @media screen and (max-width: 600px) {
   .two-pane > :nth-child(2) {
     width: 80vw;
@@ -227,6 +240,18 @@ $box-height: 40px;
   display: flex;
 }
 
+.items-center {
+  align-items: center;
+}
+
 .t-center {
   text-align: center;
+}
+
+.p-fixed {
+  position: fixed;
+}
+
+.fst-italic {
+  font-style: italic;
 }
